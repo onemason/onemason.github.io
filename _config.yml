@@ -99,8 +99,8 @@ theme: solar
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
-deploy:
-  type: git
-  repository: git@github.com:onemason/onemason.github.io.git
-  branch: master
+# deploy:
+#   type: git
+#   repository: git@github.com:onemason/onemason.github.io.git
+#   branch: master
 
