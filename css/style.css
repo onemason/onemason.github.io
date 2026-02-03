@@ -1099,14 +1099,8 @@ article .content video {
   border-radius: 8px;
 }
 article .content img {
-  opacity: 0;
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-  transform: translateY(10px);
-}
-article .content img.loaded,
-article .content img[src] {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 article .content .video-container {
   position: relative;
