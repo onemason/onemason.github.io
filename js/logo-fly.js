@@ -4,8 +4,7 @@
         var logo = document.getElementById('logo');
         if (!logo) return;
 
-        // Set initial state
-        logo.style.opacity = '0';
+        // Set initial state - no opacity flicker
         logo.style.transition = 'none';
 
         // Force reflow
@@ -22,11 +21,11 @@
         var fallDuration = 150;
 
         // Start high
-        keyframes.push({ opacity: '0', transform: `translateY(-${currentHeight}px)` });
+        keyframes.push({ transform: `translateY(-${currentHeight}px)` });
 
         // First fall to ground
         time += fallDuration;
-        keyframes.push({ opacity: '0.5', transform: 'translateY(0px)', offset: time / 4000 });
+        keyframes.push({ transform: 'translateY(0px)', offset: time / 4000 });
 
         // Exactly 23 bounces
         for (var i = 0; i < bounceCount; i++) {
@@ -50,8 +49,8 @@
             });
         }
 
-        // Final settle
-        keyframes.push({ opacity: '1', transform: 'translateY(0px)' });
+        // Final settle - no opacity change
+        keyframes.push({ transform: 'translateY(0px)' });
 
         // Perform animation
         logo.animate(keyframes, {

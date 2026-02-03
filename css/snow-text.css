@@ -2,57 +2,38 @@
   display: inline-block;
   color: inherit !important;
   background: transparent !important;
-  will-change: opacity, transform;
+  will-change: transform;
+  animation: snowFall 3s ease-out forwards;
 }
 @-moz-keyframes snowFall {
   0% {
-    opacity: 0;
     transform: translateY(-40px);
   }
-  30% {
-    opacity: 1;
-  }
   100% {
-    opacity: 1;
     transform: translateY(0);
   }
 }
 @-webkit-keyframes snowFall {
   0% {
-    opacity: 0;
     transform: translateY(-40px);
   }
-  30% {
-    opacity: 1;
-  }
   100% {
-    opacity: 1;
     transform: translateY(0);
   }
 }
 @-o-keyframes snowFall {
   0% {
-    opacity: 0;
     transform: translateY(-40px);
   }
-  30% {
-    opacity: 1;
-  }
   100% {
-    opacity: 1;
     transform: translateY(0);
   }
 }
 @keyframes snowFall {
   0% {
-    opacity: 0;
     transform: translateY(-40px);
   }
-  30% {
-    opacity: 1;
-  }
   100% {
-    opacity: 1;
     transform: translateY(0);
   }
 }

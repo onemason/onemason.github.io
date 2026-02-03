@@ -8,9 +8,10 @@ if (!!$.prototype.justifiedGallery) { // if justifiedGallery method is defined
 }
 
 
-$(window).on('load', function() {
-   $("#wrapper").fadeTo("slow",1);
-});
+// Wrapper is now visible by default, no need for fade animation
+// $(window).on('load', function() {
+//    $("#wrapper").fadeTo("slow",1);
+// });
 
 $(document).ready(function() {
     $(window).on('scroll', function() {

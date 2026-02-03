@@ -28,54 +28,32 @@
             var span = document.createElement('span');
             span.className = 'snow-char';
             span.textContent = textNode.textContent;
-            span.style.color = '';
             textNode.parentNode.replaceChild(span, textNode);
         });
 
-        // Start snow falling animation
+        // Set animation delay only - opacity and animation are in CSS
         var chars = content.querySelectorAll('.snow-char');
         chars.forEach(function(char, index) {
-            var delay = index * 0.01;
-            char.style.opacity = '0';
+            var delay = index * 0.02;
             char.style.animationDelay = delay + 's';
-            char.style.animationDuration = '1.2s';
-            char.style.animationFillMode = 'forwards';
-            char.style.animationTimingFunction = 'ease-out';
-            char.style.animationName = 'snowFall';
         });
 
-        // Restore text after animation
+        // Restore text after all animations complete
         setTimeout(function() {
             chars.forEach(function(span) {
                 var text = document.createTextNode(span.textContent);
-                span.parentNode.replaceChild(text, span);
+                if (span.parentNode) {
+                    span.parentNode.replaceChild(text, span);
+                }
             });
-        }, 3500);
-    }
-
-    // Image fade-in animation
-    function initImageFadeIn() {
-        var images = document.querySelectorAll('.content img');
-        images.forEach(function(img) {
-            // If image already loaded, show immediately
-            if (img.complete) {
-                img.style.opacity = '1';
-            } else {
-                img.style.opacity = '0';
-                img.addEventListener('load', function() {
-                    img.style.opacity = '1';
-                });
-            }
-        });
+        }, 5000);
     }
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
             initSnowText();
-            initImageFadeIn();
         });
     } else {
         initSnowText();
-        initImageFadeIn();
     }
 })();

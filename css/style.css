@@ -1100,80 +1100,7 @@ article .content video {
 }
 article .content img {
   opacity: 1;
-  transform: none;
-}
-article .content .video-container {
-  position: relative;
-  padding-top: 56.25%;
-  height: 0;
-  overflow: hidden;
-}
-article .content .video-container iframe,
-article .content .video-container object,
-article .content .video-container embed {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  margin-top: 0;
-}
-article .content blockquote {
-  background: inherit;
-  color: #ccffb6;
-  border-left: 0px solid #ccc;
-  margin: 0rem 1px;
-  padding: 0em 1px;
-  quotes: "\201C" "\201D" "\2018" "\2019";
-}
-article .content blockquote p {
-  margin: 0;
-}
-article .content blockquote:before {
-  color: #ccffb6;
-  content: "\201C";
-  font-size: 2em;
-  line-height: 0.1em;
-  margin-right: 0.25em;
-  vertical-align: -0.4em;
-}
-article .content blockquote footer {
-  color: #666;
-  font-size: 11px;
-  margin: line-height 0;
-}
-article .content blockquote footer a {
-  color: #666;
-  background-image: linear-gradient(transparent, transparent 5px, #666 5px, #666);
-}
-article .content blockquote footer a:hover {
-  color: #999;
-  background-image: linear-gradient(transparent, transparent 4px, #999 4px, #999);
-}
-article .content blockquote footer cite:before {
-  content: "—";
-  padding: 0 0.5em;
-}
-article .content .pullquote {
-  text-align: left;
-  width: 45%;
-  margin: 0;
-}
-article .content .pullquote.left {
-  margin-left: 0.5em;
-  margin-right: 1em;
-}
-article .content .pullquote.right {
-  margin-right: 0.5em;
-  margin-left: 1em;
-}
-article .content .caption {
-  color: color-grey;
-  display: block;
-  font-size: 0.9em;
-  margin-top: 0.5em;
-  position: relative;
-  text-align: center;
+  animation: imageFadeIn 1.5s ease-out forwards;
 }
 .posttitle {
   text-transform: none;
@@ -1194,6 +1121,330 @@ article .content .caption {
 @media (max-width: 480px) {
   article .content {
     padding-bottom: 60px;
+  }
+}
+@-moz-keyframes imageFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .video-container {
+    position: relative;
+    padding-top: 56.25%;
+    height: 0;
+    overflow: hidden;
+  }
+  iframe, object, embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin-top: 0;
+  }
+  blockquote {
+    background: inherit;
+    color: #ccffb6;
+    border-left: 0px solid #ccc;
+    margin: 0rem 1px;
+    padding: 0em 1px;
+    quotes: "\201C" "\201D" "\2018" "\2019";
+  }
+  p {
+    margin: 0;
+  }
+  :before {
+    color: #ccffb6;
+    content: "\201C";
+    font-size: 2em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+  }
+  footer {
+    color: #666;
+    font-size: 11px;
+    margin: line-height 0;
+  }
+  a {
+    color: #666;
+    background-image: linear-gradient(transparent, transparent 5px, #666 5px, #666);
+  }
+  a:hover {
+    color: #999;
+    background-image: linear-gradient(transparent, transparent 4px, #999 4px, #999);
+  }
+  :before {
+    content: "—";
+    padding: 0 0.5em;
+  }
+  .pullquote {
+    text-align: left;
+    width: 45%;
+    margin: 0;
+  }
+  .left {
+    margin-left: 0.5em;
+    margin-right: 1em;
+  }
+  .right {
+    margin-right: 0.5em;
+    margin-left: 1em;
+  }
+  .caption {
+    color: color-grey;
+    display: block;
+    font-size: 0.9em;
+    margin-top: 0.5em;
+    position: relative;
+    text-align: center;
+  }
+}
+@-webkit-keyframes imageFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .video-container {
+    position: relative;
+    padding-top: 56.25%;
+    height: 0;
+    overflow: hidden;
+  }
+  iframe, object, embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin-top: 0;
+  }
+  blockquote {
+    background: inherit;
+    color: #ccffb6;
+    border-left: 0px solid #ccc;
+    margin: 0rem 1px;
+    padding: 0em 1px;
+    quotes: "\201C" "\201D" "\2018" "\2019";
+  }
+  p {
+    margin: 0;
+  }
+  :before {
+    color: #ccffb6;
+    content: "\201C";
+    font-size: 2em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+  }
+  footer {
+    color: #666;
+    font-size: 11px;
+    margin: line-height 0;
+  }
+  a {
+    color: #666;
+    background-image: linear-gradient(transparent, transparent 5px, #666 5px, #666);
+  }
+  a:hover {
+    color: #999;
+    background-image: linear-gradient(transparent, transparent 4px, #999 4px, #999);
+  }
+  :before {
+    content: "—";
+    padding: 0 0.5em;
+  }
+  .pullquote {
+    text-align: left;
+    width: 45%;
+    margin: 0;
+  }
+  .left {
+    margin-left: 0.5em;
+    margin-right: 1em;
+  }
+  .right {
+    margin-right: 0.5em;
+    margin-left: 1em;
+  }
+  .caption {
+    color: color-grey;
+    display: block;
+    font-size: 0.9em;
+    margin-top: 0.5em;
+    position: relative;
+    text-align: center;
+  }
+}
+@-o-keyframes imageFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .video-container {
+    position: relative;
+    padding-top: 56.25%;
+    height: 0;
+    overflow: hidden;
+  }
+  iframe, object, embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin-top: 0;
+  }
+  blockquote {
+    background: inherit;
+    color: #ccffb6;
+    border-left: 0px solid #ccc;
+    margin: 0rem 1px;
+    padding: 0em 1px;
+    quotes: "\201C" "\201D" "\2018" "\2019";
+  }
+  p {
+    margin: 0;
+  }
+  :before {
+    color: #ccffb6;
+    content: "\201C";
+    font-size: 2em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+  }
+  footer {
+    color: #666;
+    font-size: 11px;
+    margin: line-height 0;
+  }
+  a {
+    color: #666;
+    background-image: linear-gradient(transparent, transparent 5px, #666 5px, #666);
+  }
+  a:hover {
+    color: #999;
+    background-image: linear-gradient(transparent, transparent 4px, #999 4px, #999);
+  }
+  :before {
+    content: "—";
+    padding: 0 0.5em;
+  }
+  .pullquote {
+    text-align: left;
+    width: 45%;
+    margin: 0;
+  }
+  .left {
+    margin-left: 0.5em;
+    margin-right: 1em;
+  }
+  .right {
+    margin-right: 0.5em;
+    margin-left: 1em;
+  }
+  .caption {
+    color: color-grey;
+    display: block;
+    font-size: 0.9em;
+    margin-top: 0.5em;
+    position: relative;
+    text-align: center;
+  }
+}
+@keyframes imageFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .video-container {
+    position: relative;
+    padding-top: 56.25%;
+    height: 0;
+    overflow: hidden;
+  }
+  iframe, object, embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin-top: 0;
+  }
+  blockquote {
+    background: inherit;
+    color: #ccffb6;
+    border-left: 0px solid #ccc;
+    margin: 0rem 1px;
+    padding: 0em 1px;
+    quotes: "\201C" "\201D" "\2018" "\2019";
+  }
+  p {
+    margin: 0;
+  }
+  :before {
+    color: #ccffb6;
+    content: "\201C";
+    font-size: 2em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+  }
+  footer {
+    color: #666;
+    font-size: 11px;
+    margin: line-height 0;
+  }
+  a {
+    color: #666;
+    background-image: linear-gradient(transparent, transparent 5px, #666 5px, #666);
+  }
+  a:hover {
+    color: #999;
+    background-image: linear-gradient(transparent, transparent 4px, #999 4px, #999);
+  }
+  :before {
+    content: "—";
+    padding: 0 0.5em;
+  }
+  .pullquote {
+    text-align: left;
+    width: 45%;
+    margin: 0;
+  }
+  .left {
+    margin-left: 0.5em;
+    margin-right: 1em;
+  }
+  .right {
+    margin-right: 0.5em;
+    margin-left: 1em;
+  }
+  .caption {
+    color: color-grey;
+    display: block;
+    font-size: 0.9em;
+    margin-top: 0.5em;
+    position: relative;
+    text-align: center;
   }
 }
 .blog-post-comments {
@@ -1260,7 +1511,7 @@ article .content .caption {
   perspective-origin: 60% 50%;
   margin-top: 2vh;
   width: inherit;
-  opacity: 0;
+  opacity: 1;
   padding: 0;
 }
 .wrapper > div {
