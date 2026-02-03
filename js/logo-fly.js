@@ -1,4 +1,4 @@
-// Logo drops like a ping-pong ball
+// Logo drops like a real ping-pong ball with exactly 23 bounces
 (function() {
     function initLogoDrop() {
         var logo = document.getElementById('logo');
@@ -11,22 +11,43 @@
         // Force reflow
         void logo.offsetWidth;
 
-        // Ping-pong bounce keyframes
-        var keyframes = [];
+        // Real ping-pong ball physics
         var bounceCount = 23;
-        var bounceHeight = 80;
+        var initialHeight = 300;
+        var bounceRatio = 0.78; // Height retained per bounce (slightly higher to sustain 23 bounces)
 
-        // Initial position - in air
-        keyframes.push({ opacity: '0', transform: 'translateY(-300px)' });
+        var keyframes = [];
+        var currentHeight = initialHeight;
+        var time = 0;
+        var fallDuration = 150;
 
-        // First hit on ground
-        keyframes.push({ opacity: '0.5', transform: 'translateY(0px)' });
+        // Start high
+        keyframes.push({ opacity: '0', transform: `translateY(-${currentHeight}px)` });
 
-        // 23 bounces
+        // First fall to ground
+        time += fallDuration;
+        keyframes.push({ opacity: '0.5', transform: 'translateY(0px)', offset: time / 4000 });
+
+        // Exactly 23 bounces
         for (var i = 0; i < bounceCount; i++) {
-            var height = bounceHeight * Math.pow(0.82, i);
-            keyframes.push({ transform: `translateY(-${height}px)` });
-            keyframes.push({ transform: 'translateY(0px)' });
+            currentHeight *= bounceRatio;
+
+            var riseDuration = fallDuration * Math.sqrt(bounceRatio) * (1 + i * 0.02);
+            fallDuration *= Math.sqrt(bounceRatio);
+
+            // Rise up
+            time += riseDuration;
+            keyframes.push({
+                transform: `translateY(-${currentHeight}px)`,
+                offset: time / 4000
+            });
+
+            // Fall down
+            time += fallDuration;
+            keyframes.push({
+                transform: 'translateY(0px)',
+                offset: time / 4000
+            });
         }
 
         // Final settle
@@ -34,7 +55,7 @@
 
         // Perform animation
         logo.animate(keyframes, {
-            duration: 4000,
+            duration: time + 200,
             easing: 'ease-out',
             fill: 'forwards'
         });
