@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="/prism/prism.js" async></script>
+    <link rel="stylesheet" href="/prism/prism.css">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="文&#x2F;年容 先扯淡。 最近在果壳网看到一篇文章解释了一个问题：为什么不管是坐在写字楼的办公位敲打键盘还是行走于施工一线挥汗如雨都会让人觉得劳累。我总结了一下原因：从被动的努力中获取不到满足感使人疲惫。解释一下就是内心是想刷微博刷朋友圈追剧搓麻打牌的，但是又因为生活所迫不得不”努力”地搬砖维持生计从而导致疲劳。换句话说那些发自内心喜欢自己工作的人从来不会感到疲倦。能从工作中真正获得满足感和自">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue应用是如何形成的">
+<meta property="og:url" content="https://onemason.github.io/2019/Vue%E5%BA%94%E7%94%A8%E6%98%AF%E5%A6%82%E4%BD%95%E5%BD%A2%E6%88%90%E7%9A%84/index.html">
+<meta property="og:site_name" content="泥瓦匠">
+<meta property="og:description" content="文&#x2F;年容 先扯淡。 最近在果壳网看到一篇文章解释了一个问题：为什么不管是坐在写字楼的办公位敲打键盘还是行走于施工一线挥汗如雨都会让人觉得劳累。我总结了一下原因：从被动的努力中获取不到满足感使人疲惫。解释一下就是内心是想刷微博刷朋友圈追剧搓麻打牌的，但是又因为生活所迫不得不”努力”地搬砖维持生计从而导致疲劳。换句话说那些发自内心喜欢自己工作的人从来不会感到疲倦。能从工作中真正获得满足感和自">
+<meta property="og:locale">
+<meta property="article:published_time" content="2019-04-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-02-03T12:58:26.716Z">
+<meta property="article:author" content="泥瓦匠">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.webp" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="192x192" href="/images/apple-touch-icon.webp">
+          
+        
+    
+    <!-- title -->
+    <title>Vue应用是如何形成的</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+
+    
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<link rel="stylesheet" href="/css/snow-text.css">
+
+    <!-- rss -->
+    
+    
+    <!-- jquery -->
+    
+<script src="/lib/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+    <div class="banner">
+<div id="blogtitel" class="blogtitel">泥瓦匠</div>
+<ul id="wrapper" class="wrapper">
+  <div class="sun">
+    <div class="star"></div>
+  </div>
+  <div class="mercury">
+    <div class="planet">
+      <div class="shadow"></div>
+    </div>
+  </div>
+  <div class="venus">
+    <div class="planet">
+      <div class="shadow"></div>
+    </div>
+  </div>
+  <div class="earth">
+    <div class="planet"><div class="shadow"></div></div>
+  </div>
+  <div class="mars">
+    <div class="planet"><div class="shadow"></div></div>
+  </div>
+  <div class="jupiter">
+    <div class="planet"><div class="shadow"></div></div>
+  </div>
+</ul>
+</div>
+
+    <div class="background">
+      
+        <div id="header-post">
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/%E4%B8%AD%E9%9B%86/"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/%E4%B8%80%E6%AC%A1%E5%BE%97%E4%BD%93%E7%9A%84%E8%87%AA%E5%98%B2/"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
+        
+      </ul>
+    </span>
+    <br/>
+  </span>
+</div>
+
+      
+      <div class="content index width mx-auto px2 my4">
+          
+          <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Vue应用是如何形成的
+    </h1>
+
+
+
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>文&#x2F;年容</p>
+<p>先扯淡。</p>
+<p>最近在果壳网看到<a target="_blank" rel="noopener" href="https://www.guokr.com/article/445991/"><span>一篇文章</span></a>解释了一个问题：为什么不管是坐在写字楼的办公位敲打键盘还是行走于施工一线挥汗如雨都会让人觉得劳累。我总结了一下原因：从被动的努力中获取不到满足感使人疲惫。解释一下就是内心是想刷微博刷朋友圈追剧搓麻打牌的，但是又因为生活所迫不得不”努力”地搬砖维持生计从而导致疲劳。换句话说那些发自内心喜欢自己工作的人从来不会感到疲倦。能从工作中真正获得满足感和自由的人100个里头也许只有一个吧。</p>
+<p>闲扯结束，来聊点伪技术。</p>
+<p>不知道你们觉得Vue里头最简洁的一个函数是什么？先来看几行代码。</p>
+<pre><code class="line-numbers language-javascript">import Vue from &#39;vue&#39;
+import App from &#39;./App.vue&#39;
+
+new Vue(&#123;
+  render: h =&gt; h(App),
+&#125;).$mount(&#39;#app&#39;)
+</code></pre>
+<p>应该不陌生，通过使用Vue CLI构建出一个最简单的项目，在项目的src目录下的main.js文件里能找到这几行代码。以上几行代码的作用是渲染传递给h函数的根组件即App后挂载到DOM节点树上。为了方便，我做了一个简单的目录树（去除了一些与本主题无关的目录或文件）。</p>
+<pre><code class="line-numbers language-scss">vue-demo
+├── public
+│   └── index.html
+└── src
+    ├── App.vue
+    ├── components
+    │   └── HelloWorld.vue
+    └── main.js
+</code></pre>
+<p>作为一个新手，以我狭隘的视野去看，render函数的简洁着实让我感到惊讶。render是一个函数，给render传进去的参数h也是一个函数,h函数接收的参数是App。这行代码很简短却做了好多事情。所以我之前提到的最简洁的函数指的也就是它了。有个一开始让我很摸不着头脑的问题是为啥取了个h这么无厘头名称做参数名。google一番后在<a target="_blank" rel="noopener" href="https://css-tricks.com/what-does-the-h-stand-for-in-vues-render-method/"><span>这篇文章<span></a>里找到了答案。大致意思是h是hyperscritpt的缩写，把h(App)理解为一个动词就是使得App成为DOM,准确的说h(App)返回的应该是一个虚拟DOM。至于虚拟DOM这种东西是什么就不讲了，因为我也不知道。</p>
+<p>main.js右边的类似于盒子的东西就是就是render函数了，暂时取个比较俗的名字管它叫渲染器吧。所有子组件，比如HelloWorld等组件的归属最终都是App，所以只要把App传递进渲染器中就能渲染整个Vue应用了。大致的流程就是先将App这个根组件放到渲染器中进行渲染，渲染完成后会把渲染结果通过$mount()函数挂载到index.html文件中id为app的div下，这样整个应用就形成了。</p>
+<p>这就是一个励志于成为一个偏后端的临栈Java工程师的第一篇伪技术博文了。如有错误，请无情的批评指正。下一篇准备写下Docker。基本月更，别太惦记。</p>
+
+  </div>
+</article>
+
+
+
+
+      </div>
+      
+       <div id="footer-post-container">
+  <div id="footer-post">
+  </div>
+</div>
+
+      
+      <footer id="footer">
+    <!-- <div class="footer">
+      &copy; 2026 泥瓦匠 Powered By Hexo
+    </div> -->
+</footer>
+  
+      
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+
+<script src="/js/snow-text.js"></script>
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-130235178-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+
+    </div>
+</body>
+</html>

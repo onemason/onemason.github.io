@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="/prism/prism.js" async></script>
+    <link rel="stylesheet" href="/prism/prism.css">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="文&#x2F;年容 今天碰到一个题，然后尹小凡、覃小善、彭大年等三人挺感兴趣，遂立了个flag要搞清楚一下，然后也算有了今年的第一篇博文了。 源码如下，最后i、j、k的值为多少？ package io.github.ryan.simple;  public class Increment &amp;#123;     public void inc() &amp;#123;         int i &#x3D; 1,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="通过字节码理解自增运算">
+<meta property="og:url" content="https://onemason.github.io/2020/%E9%80%9A%E8%BF%87%E5%AD%97%E8%8A%82%E7%A0%81%E7%90%86%E8%A7%A3%E8%87%AA%E5%A2%9E%E8%BF%90%E7%AE%97/index.html">
+<meta property="og:site_name" content="泥瓦匠">
+<meta property="og:description" content="文&#x2F;年容 今天碰到一个题，然后尹小凡、覃小善、彭大年等三人挺感兴趣，遂立了个flag要搞清楚一下，然后也算有了今年的第一篇博文了。 源码如下，最后i、j、k的值为多少？ package io.github.ryan.simple;  public class Increment &amp;#123;     public void inc() &amp;#123;         int i &#x3D; 1,">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-03-15T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-02-01T06:16:11.041Z">
+<meta property="article:author" content="泥瓦匠">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.webp" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="192x192" href="/images/apple-touch-icon.webp">
+          
+        
+    
+    <!-- title -->
+    <title>通过字节码理解自增运算</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+
+    
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<link rel="stylesheet" href="/css/snow-text.css">
+
+    <!-- rss -->
+    
+    
+    <!-- jquery -->
+    
+<script src="/lib/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+    <div class="banner">
+<div id="blogtitel" class="blogtitel">泥瓦匠</div>
+<ul id="wrapper" class="wrapper">
+  <div class="sun">
+    <div class="star"></div>
+  </div>
+  <div class="mercury">
+    <div class="planet">
+      <div class="shadow"></div>
+    </div>
+  </div>
+  <div class="venus">
+    <div class="planet">
+      <div class="shadow"></div>
+    </div>
+  </div>
+  <div class="earth">
+    <div class="planet"><div class="shadow"></div></div>
+  </div>
+  <div class="mars">
+    <div class="planet"><div class="shadow"></div></div>
+  </div>
+  <div class="jupiter">
+    <div class="planet"><div class="shadow"></div></div>
+  </div>
+</ul>
+</div>
+
+    <div class="background">
+      
+        <div id="header-post">
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/%E8%87%B4%E4%B9%8C%E5%A8%9C/"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/The%20Best%20Moments%20Of%202019/"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
+        
+      </ul>
+    </span>
+    <br/>
+  </span>
+</div>
+
+      
+      <div class="content index width mx-auto px2 my4">
+          
+          <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        通过字节码理解自增运算
+    </h1>
+
+
+
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>文&#x2F;年容</p>
+<p>今天碰到一个题，然后尹小凡、覃小善、彭大年等三人挺感兴趣，遂立了个flag要搞清楚一下，然后也算有了今年的第一篇博文了。</p>
+<p>源码如下，最后i、j、k的值为多少？</p>
+<pre><code class="line-numbers language-java">package io.github.ryan.simple;
+
+public class Increment &#123;
+    public void inc() &#123;
+        int i = 1, j, k;
+        i = i++;
+        j = i++;
+        k = i + ++i * i++;
+    &#125;
+&#125;
+</code></pre>
+<p>通过IntelliJ的ASM Bytecode Outline插件获取到inc()方法字节码操作顺序如下：</p>
+<pre><code class="line-numbers language-java">MAXSTACK  = 3    // 最大栈深为3
+MAXLOCALS = 4    // 最大局部变量表长度为4
+public inc()V
+   L0
+    LINENUMBER 5 // 执行后栈深为0，1#屉i为1
+    ICONST_1     // 常量1入栈   
+    ISTORE 1     // 常量1出栈并装入1#屉 
+   L1
+    LINENUMBER 6 // 执行后栈深为0，1#屉i为1
+    ILOAD 1      // 1#屉的值1入栈      
+    IINC 1 1     // 1#屉的值1自增为2    
+    ISTORE 1     // 栈顶值1出栈并装入1#屉
+   L2
+    LINENUMBER 7 // 执行后栈深为0，1#屉i为1，2#屉j为1
+    ILOAD 1      // 1#屉的值1入栈
+    IINC 1 1     // 1#屉的值1自增为2
+    ISTORE 2     // 栈顶值1出栈装入2#屉
+   L3
+    LINENUMBER 8 // 执行后栈深为0，局部变量表长为4
+    ILOAD 1      // 1#屉值2入栈，栈深为1
+    IINC 1 1     // 1#屉的值2自增为3
+    ILOAD 1      // 1#屉值3入栈，栈深为2
+    ILOAD 1      // 1#屉值3入栈，栈深为3
+    IINC 1 1     // 1#屉值3自增为4
+    IMUL         // 栈顶两个值相乘 3 * 3，并将结果入栈，栈深为2
+    IADD         // 栈顶两个值相加 9 + 2，并将结果入栈，栈深为1
+    ISTORE 3     // 栈顶值11出栈装入3#屉，栈深为0
+   L4
+    LINENUMBER 9 
+    RETURN
+</code></pre>
+<p>几点说明：</p>
+<ul>
+<li>局部变量表可以看成是一排有编号的抽屉（从0开始编号），用于存放方法参数和局部变量。奇怪的是，看起来它的最大长度应该为3才对，因为inc()方法没有参数，并且只有i、j、k三个局部变量，可为什么最大长度会是4呢？因为对于非静态方法，0#屉存放的是方法所属对象的引用</li>
+<li>L0、L1、L2等表示标签，L代表label</li>
+<li>多数指令是对操作栈的数进行操作的，IINC指令则比较特别，它直接对局部变量表上的数进行操作</li>
+<li>i &#x3D; 4，j &#x3D; 1，k &#x3D; 11</li>
+</ul>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://dzone.com/articles/introduction-to-java-bytecode">https://dzone.com/articles/introduction-to-java-bytecode</a></li>
+</ul>
+
+  </div>
+</article>
+
+
+
+
+      </div>
+      
+       <div id="footer-post-container">
+  <div id="footer-post">
+  </div>
+</div>
+
+      
+      <footer id="footer">
+    <!-- <div class="footer">
+      &copy; 2026 泥瓦匠 Powered By Hexo
+    </div> -->
+</footer>
+  
+      
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+
+<script src="/js/snow-text.js"></script>
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-130235178-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+
+    </div>
+</body>
+</html>
