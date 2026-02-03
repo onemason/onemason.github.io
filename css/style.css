@@ -1067,7 +1067,7 @@ article header .meta {
 }
 article header .meta * {
   color: #ccc;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
 }
 article header .author {
   text-transform: uppercase;
@@ -1089,6 +1089,14 @@ article .content h2:before {
   top: -2px;
   font-size: 1.2rem;
   font-weight: bold;
+}
+article .content img,
+article .content video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: auto;
+  border-radius: 8px;
 }
 article .content img {
   opacity: 0;
@@ -1397,9 +1405,10 @@ article .content .caption {
   padding: 2%;
   color: #dedede;
   text-align: center;
-  font-size: 40px;
+  font-size: 18px;
   font-family: "Menlo", monospace;
-  font-weight: 700;
+  font-weight: 300;
+  letter-spacing: 2px;
 }
 @-moz-keyframes spinsun {
   0% {

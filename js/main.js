@@ -10,7 +10,6 @@ if (!!$.prototype.justifiedGallery) { // if justifiedGallery method is defined
 
 $(window).on('load', function() {
    $("#wrapper").fadeTo("slow",1);
-   $("#blogtitel").fadeOut(2000);
 });
 
 $(document).ready(function() {
