@@ -53,9 +53,29 @@
         }, 3500);
     }
 
+    // Image fade-in animation
+    function initImageFadeIn() {
+        var images = document.querySelectorAll('.content img');
+        images.forEach(function(img) {
+            // If image already loaded, show immediately
+            if (img.complete) {
+                img.style.opacity = '1';
+            } else {
+                img.style.opacity = '0';
+                img.addEventListener('load', function() {
+                    img.style.opacity = '1';
+                });
+            }
+        });
+    }
+
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initSnowText);
+        document.addEventListener('DOMContentLoaded', function() {
+            initSnowText();
+            initImageFadeIn();
+        });
     } else {
         initSnowText();
+        initImageFadeIn();
     }
 })();
