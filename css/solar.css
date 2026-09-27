@@ -1,0 +1,393 @@
+@keyframes spinsun {
+  0% { transform: rotate(0); }
+  100%   { transform: rotate(-360deg); }
+}
+
+/* Shadow animation: fade out when on the back.
+   阴影带为行星宽度的 400%（与原 background-size:cover 的渲染宽度一致），
+   用 translateX 扫过与原 background-position 完全相同的可见区间，
+   只动画 transform/opacity（合成器友好），不再逐帧改 background-position。 */
+@keyframes shadow {
+  0% {
+    opacity: 1;
+    transform: translateX(-97.5%);
+  }
+  25% {
+    opacity: 0.92;
+    transform: translateX(-63.75%);
+  }
+  50% {
+    opacity: 0.45;
+    transform: translateX(-37.5%);
+  }
+  75% {
+    opacity: 0.18;
+    transform: translateX(-7.5%);
+  }
+  90% {
+    opacity: 0.1;
+    transform: translateX(15%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-97.5%);
+  }
+}
+
+@keyframes orbitearth {
+  0% { transform: rotateY(0deg); z-index: 4; }
+  49.99% { z-index: 4; }
+  50% { z-index: -4; }
+  100% { transform: rotateY(359.99deg); z-index: -4; }
+}
+
+@keyframes orbitmars {
+  0% { transform: rotateY(0deg); z-index: 5; }
+  49.99% { z-index: 5; }
+  50% { z-index: -5; }
+  100% { transform: rotateY(359.99deg); z-index: -5; }
+}
+
+@keyframes orbitjupiter {
+  0% { transform: rotateY(0deg); z-index: 6; }
+  49.99% { z-index: 6; }
+  50% { z-index: -6; }
+  100% { transform: rotateY(359.99deg); z-index: -6; }
+}
+
+/* Keep planet image flat */
+@keyframes anti-spin {
+  from { transform: rotateY(0); }
+  to   { transform: rotateY(-359.99deg); }
+}
+
+/* Scene wrapper */
+.wrapper {
+  position: fixed;
+  perspective: 5000px;
+  perspective-origin: 60% 50%;
+  margin-top: 2vh;
+  width: inherit;
+  opacity: 1;
+  padding: 0;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.wrapper > div {
+  position: relative;
+  margin: 0 auto;
+  transform-style: preserve-3d;
+  height: 0px;
+}
+
+.sun {
+  width: 250px;
+  position: absolute;
+  top: 10px;
+  z-index: 1;
+  height: 125px !important;
+}
+
+.sun .star {
+  width: 150px;
+  height: 150px;
+  background: var(--sun-image) no-repeat;
+  background-size: cover;
+  border-radius: 250px;
+  margin: 0 auto;
+  filter: brightness(0.93);
+  animation: spinsun 600s infinite linear;
+}
+
+.planet {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  animation-iteration-count: infinite;
+  overflow: hidden;
+}
+
+.shadow {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  border-radius: 100%;
+  overflow: hidden;
+}
+
+.shadow::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 400%;
+  background: transparent var(--shadow-image) 0 0 no-repeat;
+  background-size: cover;
+  will-change: transform, opacity;
+}
+
+.earth {
+  position: absolute;
+  width: 610px;
+  z-index: 4;
+  animation: orbitearth 40s infinite linear;
+  top: -30px;
+}
+
+.earth .planet {
+  width: 50px;
+  height: 50px;
+  background-image: var(--earth-image);
+  animation: anti-spin 40s infinite linear;
+}
+
+.earth .shadow::after {
+  animation: shadow 40s infinite linear;
+}
+
+.mars {
+  position: absolute;
+  width: 706px;
+  z-index: 5;
+  animation: orbitmars 60s infinite linear;
+  top: -21px;
+}
+
+.mars .planet {
+  width: 32px;
+  height: 32px;
+  background-image: var(--mars-image);
+  animation: anti-spin 60s infinite linear;
+}
+
+.mars .shadow::after {
+  animation: shadow 60s infinite linear;
+}
+
+.jupiter {
+  position: absolute;
+  width: 1020px;
+  z-index: 6;
+  animation: orbitjupiter 78s infinite linear;
+  top: -49px;
+}
+
+.jupiter .planet {
+  width: 88px;
+  height: 88px;
+  background-image: var(--jupiter-image);
+  animation: anti-spin 78s infinite linear;
+}
+
+.jupiter .shadow::after {
+  animation: shadow 78s infinite linear;
+}
+
+.banner-wrapper {
+  height: 30vh;
+  width: 100%;
+  max-width: 50rem;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  transform-origin: 50% 0;
+  z-index: 100;
+  pointer-events: none;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.blogtitel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  margin: 0;
+  padding: 2%;
+  color: var(--color-lightest);
+  text-align: center;
+  font-size: 18px;
+  font-family: var(--font-family-body);
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+
+/* ============================================
+   Mobile Responsive Styles for Solar System
+   ============================================ */
+
+/* Tablet and below (max-width: 768px) */
+@media (max-width: 768px) {
+  .wrapper {
+    perspective: 5000px;
+    perspective-origin: 60% 50%;
+    margin-top: 2vh;
+    transform: scale(1.2);
+    transform-origin: center top;
+    overflow: visible;
+  }
+
+  .banner-wrapper {
+    height: 20vh;
+  }
+
+  /* Reduce planet sizes */
+  .sun {
+    width: 274px;
+    height: 137px !important;
+  }
+
+  .sun .star {
+    width: 184px;
+    height: 184px;
+    filter: none;
+  }
+
+  .earth {
+    width: 747px;
+    top: -22px;
+  }
+
+  .earth .planet {
+    width: 75px;
+    height: 75px;
+  }
+
+  .mars {
+    width: 872px;
+    top: -11px;
+  }
+
+  .mars .planet {
+    width: 52px;
+    height: 52px;
+  }
+
+  .jupiter {
+    width: 1130px;
+    top: -34px;
+  }
+
+  .jupiter .planet {
+    width: 98px;
+    height: 98px;
+  }
+}
+
+/* Small mobile (max-width: 480px) */
+@media (max-width: 480px) {
+  .wrapper {
+    perspective: 4000px;
+    perspective-origin: 60% 40%;
+    margin-top: 3vh;
+    transform: scale(1.13);
+    transform-origin: center top;
+    overflow: visible;
+  }
+
+  .banner-wrapper {
+    height: 15vh;
+  }
+
+  /* Further reduce planet sizes */
+  .sun {
+    width: 182px;
+    height: 91px !important;
+  }
+
+  .sun .star {
+    width: 128px;
+    height: 128px;
+    filter: none;
+  }
+
+  .earth {
+    width: 500px;
+    top: -16px;
+  }
+
+  .earth .planet {
+    width: 51px;
+    height: 51px;
+  }
+
+  .mars {
+    width: 583px;
+    top: -5px;
+  }
+
+  .mars .planet {
+    width: 29px;
+    height: 29px;
+  }
+
+  .jupiter {
+    width: 745px;
+    top: -23px;
+  }
+
+  .jupiter .planet {
+    width: 64px;
+    height: 64px;
+  }
+}
+
+/* Large tablet / small desktop (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .wrapper {
+    perspective: 4000px;
+    perspective-origin: 55% 50%;
+    transform: scale(0.95);
+    transform-origin: center top;
+  }
+}
+
+/* ============================================
+   Performance & accessibility
+   ============================================ */
+
+/* Pause all planet animations while the banner is off-screen
+   or the tab is hidden (class toggled by banner.html). */
+html.animations-paused .wrapper .sun .star,
+html.animations-paused .wrapper .earth,
+html.animations-paused .wrapper .mars,
+html.animations-paused .wrapper .jupiter,
+html.animations-paused .wrapper .planet,
+html.animations-paused .wrapper .shadow,
+html.animations-paused .wrapper .shadow::after,
+html.scrolling .wrapper .sun .star,
+html.scrolling .wrapper .earth,
+html.scrolling .wrapper .mars,
+html.scrolling .wrapper .jupiter,
+html.scrolling .wrapper .planet,
+html.scrolling .wrapper .shadow,
+html.scrolling .wrapper .shadow::after {
+  animation-play-state: paused !important;
+}
+
+/* Respect users who prefer reduced motion: fully disable animations */
+@media (prefers-reduced-motion: reduce) {
+  .wrapper .sun .star,
+  .wrapper .earth,
+  .wrapper .earth .planet,
+  .wrapper .earth .shadow,
+  .wrapper .earth .shadow::after,
+  .wrapper .mars,
+  .wrapper .mars .planet,
+  .wrapper .mars .shadow,
+  .wrapper .mars .shadow::after,
+  .wrapper .jupiter,
+  .wrapper .jupiter .planet,
+  .wrapper .jupiter .shadow,
+  .wrapper .jupiter .shadow::after {
+    animation: none !important;
+  }
+}
